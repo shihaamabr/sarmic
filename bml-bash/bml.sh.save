@@ -1,0 +1,20 @@
+#!/bin/bash
+
+source .env
+
+BML_URL='https://www.bankofmaldives.com.mv/internetbanking/api'
+
+curl -s -c /tmp/bmlcookie $BML_URL/login \
+	--data-raw username=$BML_USERNAME \
+	--data-raw password=$BML_PASSWORD \
+  --compressed
+
+curl -s -b /tmp/bmlcookie $BML_URL/profile
+
+
+
+
+
+ 
+
+
