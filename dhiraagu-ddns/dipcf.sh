@@ -47,7 +47,7 @@ curl -s -X PUT $CF_API_URL/zones/$CF_ZONE_ID/dns_records/$CF_DNS_RECORDS \
 	--data '{"type":"A","name":"'${CF_DOMAIN}'","content":"'${DHIRAAGU_IP}'","ttl":120,"proxied":false}' > /dev/null
 
 #Print IP address to console
-echo IP Address = $DIP
+echo IP Address = $DHIRAAGU_IP
 
 #delete the cookie from /tmp directory
 rm /tmp/dcookies

@@ -28,7 +28,7 @@ else
 fi
 
 
-DIP=$(curl -s -b /tmp/dcookies \
+DHIRAAGU_IP=$(curl -s -b /tmp/dcookies \
 		 $DHIRAAGU_HOME_URL \
 			| grep 'IP Address' -A1 \
 			| tail -n1 \
@@ -36,6 +36,6 @@ DIP=$(curl -s -b /tmp/dcookies \
 			| cut -f1 -d '<' \
 			| cut --complement -d '>' -f 1)
 
-echo IP Address = $DIP
+echo IP Address = $DHIRAAGU_IP
 
 rm /tmp/dcookies
