@@ -15,7 +15,7 @@ AUTH=$(curl -s -c /tmp/dcookies \
                         | awk -F ',' '{print $2}' \
                         | cut --complement -d ':' -f 1)
 
-#Check if Dhiraagu Username and password is correct before continuing. Print error, elete the cookie and stop script if any errors.
+#Check if Dhiraagu Username and password is correct before continuing. Print error, delete the cookie and stop script if any errors.
 if [ "$AUTH" = "1" ]
         then
                 :
