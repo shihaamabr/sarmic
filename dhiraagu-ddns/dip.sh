@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #Import Credentials
-source .env
+source .env 2> /dev/null
 
 DHIRAAGU_LOGIN_URL='https://portal.dhivehinet.net.mv/adsls/login_api'
 DHIRAAGU_HOME_URL='https://portal.dhivehinet.net.mv/home'
