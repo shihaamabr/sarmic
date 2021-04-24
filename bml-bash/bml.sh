@@ -51,17 +51,17 @@ elif [ "$MENU" = "2" ]
 		echo "2 - Add Contact"
 		echo "3 - Delete Conact"
 		echo ""
-		printf 'Please Input:'
+		printf 'Please Input: '
 		read -r CONTACS
 
 		if [ "$CONTACS" = "1" ]
 			then
-				curl -s -b $COOKIE $BML_URL/contacts | jq
+				curl -s -b $COOKIE $BML_URL/contacts | jq -r '["Alias","Name","Account Number"], (.["payload"] | .[] | [.alias, .name, .account]) | @tsv'
 		elif [ "$CONTACS" = "2" ]
 			then
-				printf 'Account Number:'
+				printf 'Account Number: '
 				read -r ACCOUNT_NAME
-				printf 'Name:'
+				printf 'Name: '
 				read -r ACCOUNT_NAME
 				curl -s -b $COOKIE $BML_URL | jq
 		elif [ "$CONTACS" = "3" ]
