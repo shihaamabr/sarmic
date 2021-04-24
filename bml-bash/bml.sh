@@ -21,6 +21,7 @@ if [ "$LOGIN" = "true" ]
 			| cut -f1 -d '"')
 		echo ""
 		echo ${green}Welcome ${reset}$NAME
+#		curl -s -b $COOKIE $BML_URL/userinfo
 		echo ""
 else
                 echo "${red}An error occured, Please check Username and Password" 1>&2
@@ -60,10 +61,17 @@ elif [ "$MENU" = "2" ]
 		elif [ "$CONTACS" = "2" ]
 			then
 				printf 'Account Number: '
-				read -r ACCOUNT_NAME
-				printf 'Name: '
-				read -r ACCOUNT_NAME
-				curl -s -b $COOKIE $BML_URL | jq
+				read -r ACCOUNT_NUMBER
+				VALID_NUMBER=$(curl -s -b $COOKIE $BML_URL/validate/account/$ACCOUNT_NUMBER \
+						| jq -r .success)
+					if [ "$VALID_NUMBER" = "true" ]
+						then
+							printf 'Name: '
+							read -r ACCOUNT_NAME
+							curl -s -b $COOKIE $BML_URL | jq
+					else
+							echo "${red}Invalid Account" 1>&2
+					fi
 		elif [ "$CONTACS" = "3" ]
 			then
 				echo ""
@@ -82,3 +90,4 @@ elif [ "$MENU" = "5" ]
 else
 	echo "${red}There was an error"
 fi
+
