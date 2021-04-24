@@ -3,3 +3,6 @@
 ## under dev
 
 ### can you pr ascii art lmao 
+
+- Requiments 
+`curl` `jq`
