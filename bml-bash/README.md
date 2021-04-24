@@ -1,5 +1,5 @@
-###Bank of Maldives CLI written in bash
+### Bank of Maldives CLI written in bash
 
-##under dev
+## under dev
 
-#can you pr ascii art lmao 
+# can you pr ascii art lmao 
