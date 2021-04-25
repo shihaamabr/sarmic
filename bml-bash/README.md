@@ -1,8 +1,7 @@
 # Bank of Maldives CLI written in bash
 
-## under dev
+## 
 
-### can you pr ascii art lmao 
+#### moved to a new repo
 
-- Requiments 
-`curl` `jq`
+[https://github.com/shihaamabr/bmlcli](github.com/shihaamabr/bmlcli)
