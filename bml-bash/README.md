@@ -4,4 +4,4 @@
 
 #### moved to a new repo
 
-[https://github.com/shihaamabr/bmlcli](github.com/shihaamabr/bmlcli)
+[github.com/shihaamabr/bmlcli](https://github.com/shihaamabr/bmlcli)
