@@ -57,7 +57,7 @@ elif [ "$MENU" = "2" ]
 
 		if [ "$CONTACS" = "1" ]
 			then
-				curl -s -b $COOKIE $BML_URL/contacts | jq -r '["Alias","Name","Account Number"], (.["payload"] | .[] | [.alias, .name, .account]) | @tsv'
+				curl -s -b $COOKIE $BML_URL/contacts | jq -r '["Account Number","Currency","Account Name","Contact Name"], ["==================================================================="], (.["payload"] | .[] | [.account, .currency, .name, .alias]) | @tsv'
 		elif [ "$CONTACS" = "2" ]
 			then
 				printf 'Account Number: '
