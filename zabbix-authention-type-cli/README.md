@@ -9,6 +9,6 @@ you can used this script to switch back to "Internal" authention method and logi
 - This script will only work for Zabbix server using MySQL for database
 
 ### Demo
-
+![Demo](demo.png)
 
 
