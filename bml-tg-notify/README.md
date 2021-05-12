@@ -1,4 +1,4 @@
-# BM-TG-NOTIFICATION
+# BML-TG-NOTIFICATION
 
 ## Receive telegram notification when you receive money to your BML Account
 
