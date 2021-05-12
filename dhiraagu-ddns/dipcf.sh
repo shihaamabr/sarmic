@@ -31,7 +31,7 @@ else
 fi
 
 #Set DHIRAAGU_IP, login with generated cookie and some regex to extract Dhiraagu IP address
-DHRAAGU_IP=$(curl -s -b /tmp/dcookies \
+DIHRAAGU_IP=$(curl -s -b /tmp/dcookies \
 	 $DHIRAAGU_HOME_URL \
 	| grep 'IP Address' -A1 \
 	| tail -n1 \
