@@ -14,11 +14,11 @@ else
 	echo Something went wrong
 	exit
 fi
-
 CHECKDIFF1=$(echo $HISTORY | wc -c)
 HISTORY=$(curl -s -b $COOKIE $BML_URL/account/$BML_ACCOUNTID/history/today | jq -r '.payload | .history | .[]')
 CHECKDIFF2=$(echo $HISTORY | wc -c)
-
+SLEEP=$(cat delay)
+sleep $SLEEP
 if [ "$CHECKDIFF1" = "$CHECKDIFF2" ]
 then
 	echo "nothing new..checking again in $SLEEP seconds"
@@ -27,9 +27,8 @@ else
 	TRANFERFROM=$(echo $HISTORY | jq -r .narrative3 | head -n1)
 	echo From: $TRANFERFROM
 	echo MVR: $TRANSFERAMOUNT
+	echo "Next check in $SLEEP seconds"
 	TRANFERFROM=`echo "$TRANFERFROM" | sed "s/ /%20/g"`
 	curl -s $TG_BOTAPI$TG_BOT_TOKEN/sendMessage?chat_id=$TG_CHATID'&'text=From:%20$TRANFERFROM%0AMVR:%20$TRANSFERAMOUNT > /dev/null
 fi
-SLEEP=$(cat delay)
-sleep $SLEEP
 done
