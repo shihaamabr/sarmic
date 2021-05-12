@@ -4,8 +4,10 @@ mkdir -p ~/.cache/bml-cli/
 TG_BOTAPI='https://api.telegram.org/bot'
 BML_URL='https://www.bankofmaldives.com.mv/internetbanking/api'
 COOKIE=~/.cache/bml-cli/cookie
+
 while true; do
 LOGIN=$(curl -s -c $COOKIE $BML_URL/login --data-raw username=$BML_USERNAME --data-raw password=${BML_PASSWORD} | jq -r .code)
+
 if [ "$LOGIN" = "0" ]
 then
 	PROFILE=$(curl -s -b $COOKIE $BML_URL/profile | jq -r '.payload | .profile | .[] | .profile' | head -n 1)
@@ -14,21 +16,37 @@ else
 	echo Something went wrong
 	exit
 fi
+
 CHECKDIFF1=$(echo $HISTORY | wc -c)
 HISTORY=$(curl -s -b $COOKIE $BML_URL/account/$BML_ACCOUNTID/history/today | jq -r '.payload | .history | .[]')
 CHECKDIFF2=$(echo $HISTORY | wc -c)
 SLEEP=$(cat delay)
 sleep $SLEEP
-if [ "$CHECKDIFF1" = "$CHECKDIFF2" ]
+
+if [ "$CHECKDIFF1" != "$CHECKDIFF2" ]
 then
-	echo "nothing new..checking again in $SLEEP seconds"
+	DESCRIPTION=$(echo $HISTORY | jq -r .description | head -n1)
+	AMOUNT=$(echo $HISTORY | jq -r .amount | head -n1)
+	if [ "$DESCRIPTION" = "Transfer Credit" ]
+	then
+		FROMTO=From
+		ENTITY=$(echo $HISTORY | jq -r .narrative3 | head -n1)
+	elif [ "$DESCRIPTION" = "Transfer Debit" ]
+	then
+		FROMTO=To
+		ENTITY=$(echo $HISTORY | jq -r .narrative3 | head -n1)
+	elif [ "$DESCRIPTION" = "Salary" ]
+	then
+		ENTITY=$(echo $HISTORY | jq -r .narrative2 | head -n1)
+	fi
+	echo $DESCRIPTION
+	echo $FROMTO: $ENTITY
+	echo $CURRENCY: $AMOUNT
+	DESCRIPTION=`echo $DESCRIPTION | sed "s/ /%20/g"`
+	ENTITY=`echo $ENTITY | sed "s/ /%20/g"`
+	TGTEXT=$(echo $DESCRIPTION%0A$FROMTO:%20$ENTITY%0A$CURRENCY:%20$AMOUNT)
+	curl -s $TG_BOTAPI$TG_BOT_TOKEN/sendMessage?chat_id=$TG_CHATID'&'text=$TGTEXT > /dev/null
 else
-	TRANSFERAMOUNT=$(echo $HISTORY | jq -r .amount | head -n1)
-	TRANFERFROM=$(echo $HISTORY | jq -r .narrative3 | head -n1)
-	echo From: $TRANFERFROM
-	echo MVR: $TRANSFERAMOUNT
-	echo "Next check in $SLEEP seconds"
-	TRANFERFROM=`echo "$TRANFERFROM" | sed "s/ /%20/g"`
-	curl -s $TG_BOTAPI$TG_BOT_TOKEN/sendMessage?chat_id=$TG_CHATID'&'text=From:%20$TRANFERFROM%0AMVR:%20$TRANSFERAMOUNT > /dev/null
+	echo "nothing new..checking again in $SLEEP seconds"
 fi
 done
