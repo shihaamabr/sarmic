@@ -46,6 +46,7 @@ then
 	ENTITY=`echo $ENTITY | sed "s/ /%20/g"`
 	TGTEXT=$(echo $DESCRIPTION%0A$FROMTO:%20$ENTITY%0A$CURRENCY:%20$AMOUNT)
 	curl -s $TG_BOTAPI$TG_BOT_TOKEN/sendMessage?chat_id=$TG_CHATID'&'text=$TGTEXT > /dev/null
+	echo "Next Check in $SLEEP seconds"
 else
 	echo "nothing new..checking again in $SLEEP seconds"
 fi
