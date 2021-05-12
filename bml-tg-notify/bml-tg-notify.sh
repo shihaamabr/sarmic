@@ -4,13 +4,12 @@ mkdir -p ~/.cache/bml-cli/
 TG_BOTAPI='https://api.telegram.org/bot'
 BML_URL='https://www.bankofmaldives.com.mv/internetbanking/api'
 COOKIE=~/.cache/bml-cli/cookie
-SLEEP=120
 while true; do
 LOGIN=$(curl -s -c $COOKIE $BML_URL/login --data-raw username=$BML_USERNAME --data-raw password=${BML_PASSWORD} | jq -r .code)
 if [ "$LOGIN" = "0" ]
-        then
-		PROFILE=$(curl -s -b $COOKIE $BML_URL/profile | jq -r '.payload | .profile | .[] | .profile' | head -n 1)
-		curl -s -b $COOKIE $BML_URL/profile --data-raw profile=$PROFILE > /dev/null
+then
+	PROFILE=$(curl -s -b $COOKIE $BML_URL/profile | jq -r '.payload | .profile | .[] | .profile' | head -n 1)
+	curl -s -b $COOKIE $BML_URL/profile --data-raw profile=$PROFILE > /dev/null
 else
 	echo Something went wrong
 	exit
@@ -21,7 +20,7 @@ HISTORY=$(curl -s -b $COOKIE $BML_URL/account/$BML_ACCOUNTID/history/today | jq 
 CHECKDIFF2=$(echo $HISTORY | wc -c)
 
 if [ "$CHECKDIFF1" = "$CHECKDIFF2" ]
-	then
+then
 	echo "nothing new..checking again in $SLEEP seconds"
 else
 	TRANSFERAMOUNT=$(echo $HISTORY | jq -r .amount | head -n1)

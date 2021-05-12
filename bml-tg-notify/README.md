@@ -12,8 +12,9 @@ curl https://raw.githubusercontent.com/shihaamabr/sarmic/master/bml-tg-notify/bm
 curl https://raw.githubusercontent.com/shihaamabr/sarmic/master/bml-tg-notify/env.sample > .env
 
 ```
-edit the contents of .env to your config\
-`echo XX > delay` where XX is the time in seconds you want to delay script run.
+Edit the contents of .env to your config\
+`echo XX > delay` where XX is the time in seconds you want to delay script run.\
+Please note that if the XX value is less than a certain value, you could get rate limited.
 
 ```
 chmod +x bml-tg-notify.sh
