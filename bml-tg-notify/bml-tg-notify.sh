@@ -1,10 +1,6 @@
 #!/bin/bash
-#EDIT THESE:
-BML_USERNAME=''
-BML_PASSWORD=''
-BML_ACCOUNTID=''
-TG_BOT_TOKEN=''
-TG_CHATID=''
+
+source .env
 
 TG_BOTAPI='https://api.telegram.org/bot'
 BML_URL='https://www.bankofmaldives.com.mv/internetbanking/api'
@@ -37,5 +33,5 @@ else
 	TRANFERFROM=`echo "$TRANFERFROM" | sed "s/ /%20/"`
 	curl -s ''${TG_BOTAPI}''${TG_BOT_TOKEN}'/sendMessage?chat_id='${TG_CHATID}'&text=From:%20'${TRANFERFROM}%0A'MVR:%20'${TRANSFERAMOUNT}'' > /dev/null
 fi
-sleep 60
+sleep $SLEEP
 done
