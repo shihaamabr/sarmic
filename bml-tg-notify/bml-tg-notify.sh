@@ -13,15 +13,14 @@ then
 	PROFILE=$(curl -s -b $COOKIE $BML_URL/profile | jq -r '.payload | .profile | .[] | .profile' | head -n 1)
 	curl -s -b $COOKIE $BML_URL/profile --data-raw profile=$PROFILE > /dev/null
 else
-	echo Something went wrong
+	echo Something went wrong.. Probably your account locked or wrong username password OR your IP Blocked by CF
 	exit
 fi
 
 CHECKDIFF1=$(echo $HISTORY | wc -c)
 HISTORY=$(curl -s -b $COOKIE $BML_URL/account/$BML_ACCOUNTID/history/today | jq -r '.payload | .history | .[]')
 CHECKDIFF2=$(echo $HISTORY | wc -c)
-SLEEP=$(cat delay)
-sleep $SLEEP
+DELAY=$(cat delay)
 
 if [ "$CHECKDIFF1" != "$CHECKDIFF2" ]
 then
@@ -37,17 +36,19 @@ then
 		ENTITY=$(echo $HISTORY | jq -r .narrative3 | head -n1)
 	elif [ "$DESCRIPTION" = "Salary" ]
 	then
+		FROMTO=From
 		ENTITY=$(echo $HISTORY | jq -r .narrative2 | head -n1)
 	fi
 	echo $DESCRIPTION
 	echo $FROMTO: $ENTITY
 	echo $CURRENCY: $AMOUNT
-	DESCRIPTION=`echo $DESCRIPTION | sed "s/ /%20/g"`
-	ENTITY=`echo $ENTITY | sed "s/ /%20/g"`
+	DESCRIPTION=`echo $DESCRIPTION | sed "s/ /%20/g"` #Fix spaces
+	ENTITY=`echo $ENTITY | sed "s/ /%20/g"` #Fix spaces
 	TGTEXT=$(echo $DESCRIPTION%0A$FROMTO:%20$ENTITY%0A$CURRENCY:%20$AMOUNT)
 	curl -s $TG_BOTAPI$TG_BOT_TOKEN/sendMessage?chat_id=$TG_CHATID'&'text=$TGTEXT > /dev/null
-	echo "Next Check in $SLEEP seconds"
+	echo "Next check in $DELAY seconds"
 else
-	echo "nothing new..checking again in $SLEEP seconds"
+	echo "nothing new..checking again in $DELAY seconds"
 fi
+sleep $DELAY
 done
