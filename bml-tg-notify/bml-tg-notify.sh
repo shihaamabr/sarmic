@@ -28,8 +28,8 @@ else
 	TRANFERFROM=$(echo $HISTORY | jq -r .narrative3 | head -n1)
 	echo From: $TRANFERFROM
 	echo MVR: $TRANSFERAMOUNT
-	TRANFERFROM=`echo "$TRANFERFROM" | sed "s/ /%20/"`
-	curl -s ${TG_BOTAPI}${TG_BOT_TOKEN}/sendMessage?chat_id=${TG_CHATID}'&'text=From:%20${TRANFERFROM}%0AMVR:%20${TRANSFERAMOUNT} | jq
+	TRANFERFROM=`echo "$TRANFERFROM" | sed "s/ /%20/g"`
+	curl -s $TG_BOTAPI$TG_BOT_TOKEN/sendMessage?chat_id=$TG_CHATID'&'text=From:%20$TRANFERFROM%0AMVR:%20$TRANSFERAMOUNT > /dev/null
 fi
 sleep $SLEEP
 done

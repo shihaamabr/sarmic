@@ -16,3 +16,6 @@ edit the contents of .env to your config
 chmod +x bml-tg-notify.sh
 ./bml-tg-notify.sh
 ```
+
+### Bugs
+- You tell me :)
