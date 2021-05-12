@@ -8,6 +8,7 @@ TG_CHATID=''
 
 TG_BOTAPI='https://api.telegram.org/bot'
 BML_URL='https://www.bankofmaldives.com.mv/internetbanking/api'
+
 mkdir -p ~/.cache/bml-cli/
 COOKIE=~/.cache/bml-cli/cookie
 
@@ -31,10 +32,10 @@ if [ "$CHECKDIFF1" = "$CHECKDIFF2" ]
 else
 	TRANSFERAMOUNT=$(echo $HISTORY | jq -r .amount | head -n1)
 	TRANFERFROM=$(echo $HISTORY | jq -r .narrative3 | head -n1)
-	echo $TRANFERFROM
-	echo $TRANSFERAMOUNT
+	echo From: $TRANFERFROM
+	echo MVR: $TRANSFERAMOUNT
 	TRANFERFROM=`echo "$TRANFERFROM" | sed "s/ /%20/"`
-	curl -s ''${TG_BOTAPI}''${TG_BOT_TOKEN}'/sendMessage?chat_id='${TG_CHATID}'&text=From:'${TRANFERFROM}'MVR:'${TRANSFERAMOUNT}'' > /dev/null
+	curl -s ''${TG_BOTAPI}''${TG_BOT_TOKEN}'/sendMessage?chat_id='${TG_CHATID}'&text=From:%20'${TRANFERFROM}%0A'MVR:%20'${TRANSFERAMOUNT}'' > /dev/null
 fi
-sleep 30
+sleep 60
 done
