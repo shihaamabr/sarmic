@@ -3,8 +3,8 @@
 ## Receive telegram notification when you receive money to your BML Account
 
 ### Requriements
-`curl`
-- Install curl with whatever package manager you use.
+`curl` `jq`
+- Install with whatever package manager you use.
 	
 ### Setup
 ```
