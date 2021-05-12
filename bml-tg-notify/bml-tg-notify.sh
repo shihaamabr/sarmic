@@ -1,11 +1,8 @@
 #!/bin/bash
-
 source .env
-
+mkdir -p ~/.cache/bml-cli/
 TG_BOTAPI='https://api.telegram.org/bot'
 BML_URL='https://www.bankofmaldives.com.mv/internetbanking/api'
-
-mkdir -p ~/.cache/bml-cli/
 COOKIE=~/.cache/bml-cli/cookie
 
 LOGIN=$(curl -s -c $COOKIE $BML_URL/login --data-raw username=$BML_USERNAME --data-raw password=${BML_PASSWORD} | jq -r .code)
@@ -19,9 +16,11 @@ else
 fi
 
 while true; do
+
 CHECKDIFF1=$(echo $HISTORY | wc -c)
 HISTORY=$(curl -s -b $COOKIE $BML_URL/account/$BML_ACCOUNTID/history/today | jq -r '.payload | .history | .[]')
 CHECKDIFF2=$(echo $HISTORY | wc -c)
+
 if [ "$CHECKDIFF1" = "$CHECKDIFF2" ]
 	then
 	echo nothing new..checking again
