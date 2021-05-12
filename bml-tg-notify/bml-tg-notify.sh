@@ -26,10 +26,10 @@ curl -s -b $COOKIE $BML_URL/profile > /dev/null
 while true; do
 CHECKDIFF1=$(echo $HISTORY | wc -c)
 HISTORY=$(curl -s -b $COOKIE $BML_URL/account/$BML_ACCOUNTID/history/today | jq -r '.payload | .history | .[]')
+CHECKDIFF2=$(echo $HISTORY | wc -c)
 if [ "$CHECKDIFF1" = "$CHECKDIFF2" ]
 	then
 	echo nothing new..checking again
-	CHECKDIFF2=$(echo $HISTORY | wc -c)
 else
 	TRANSFERAMOUNT=$(echo $HISTORY | jq -r .amount | head -n1)
 	TRANFERFROM=$(echo $HISTORY | jq -r .narrative3 | head -n1)
