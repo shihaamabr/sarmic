@@ -9,9 +9,9 @@
 ### Setup
 ```
 curl https://raw.githubusercontent.com/shihaamabr/sarmic/master/bml-tg-notify/bml-tg-notify.sh > bml-tg-notify.sh
-curl https://raw.githubusercontent.com/shihaamabr/sarmic/master/bml-tg-notify/env > .env
+curl https://raw.githubusercontent.com/shihaamabr/sarmic/master/bml-tg-notify/env.sample > .env
 ```
-- edit the contents of .env to your config
+edit the contents of .env to your config
 ```
 chmod +x bml-tg-notify.sh
 ./bml-tg-notify.sh
