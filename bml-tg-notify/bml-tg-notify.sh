@@ -5,6 +5,7 @@ TG_BOTAPI='https://api.telegram.org/bot'
 BML_URL='https://www.bankofmaldives.com.mv/internetbanking/api'
 COOKIE=~/.cache/bml-cli/cookie
 
+while true; do
 LOGIN=$(curl -s -c $COOKIE $BML_URL/login --data-raw username=$BML_USERNAME --data-raw password=${BML_PASSWORD} | jq -r .code)
 if [ "$LOGIN" = "0" ]
         then
@@ -14,8 +15,6 @@ else
 	echo Something went wrong
 	exit
 fi
-
-while true; do
 
 CHECKDIFF1=$(echo $HISTORY | wc -c)
 HISTORY=$(curl -s -b $COOKIE $BML_URL/account/$BML_ACCOUNTID/history/today | jq -r '.payload | .history | .[]')
