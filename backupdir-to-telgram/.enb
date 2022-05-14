@@ -1,0 +1,9 @@
+
+
+# Telegram Config
+### Your Telegram Bot API Token, Contact @BotFather on Telegram to obtain token
+TG_BOT_TOKEN=''	
+### Your Telegram chat ID, This could be your user, group, supergroup or channel ID, add "-100" first if supergroup or channel
+TG_CHATID=''
+### Change to a private hosted Telegram Bot API if compressed dir is over 50MB
+TG_BOTAPI='https://api.telegram.org/bot'
